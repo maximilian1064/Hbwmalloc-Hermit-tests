@@ -3,9 +3,15 @@ LIBHBWMALLOC = /home/maxi1064/workspace/HermitHBWwork/hbwmalloc-hermit/libhbwmal
 
 THREAD_FLAG = -pthread
 
-TESTS = test-interface-st-hbw test-interface-mt-hbw test-interface-mt-native test-st-hbw test-mt-hbw test-mt-native test-mt-linux
+TESTS = test-interface-mt-native test-mt-native test-mt-linux
 
 all: $(TESTS) 
+
+#ignore all targets suffixed with -hbw if you don't have the library
+
+#test-interface-mt-native ==> test a mix of interface functions provided by newlib's malloc, in multi-thread environments
+#test-mt-native           ==> test the newlib's malloc performance in multi-thread environments, test pattern is simple for-loop of malloc-free sequence
+#test-mt-linux 			  ==> same as test-mt-native, but using linux's glibc
 
 test-interface-st-hbw: interface-single-thread-test.c
 	$(HERMIT-CC) $< $(LIBHBWMALLOC) -o $@ 
