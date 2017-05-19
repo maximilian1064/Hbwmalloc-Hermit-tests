@@ -3,7 +3,7 @@ LIBHBWMALLOC = /home/maxi1064/workspace/HermitHBWwork/hbwmalloc-hermit/libhbwmal
 
 THREAD_FLAG = -pthread
 
-TESTS = test-interface-mt-native test-mt-native test-mt-linux
+TESTS = test-interface-mt-native test-mt-native test-mt-linux test-st-native
 
 all: $(TESTS) 
 
@@ -25,14 +25,17 @@ test-interface-mt-native: interface-multi-thread-test.c
 test-st-hbw: test-single-thread.c 
 	$(HERMIT-CC) -DSIZE=16384 -DNUM_ITER=10000 $< $(LIBHBWMALLOC) -o $@ 
 
+test-st-native: test-single-thread.c 
+	$(HERMIT-CC) -DSIZE=16384 -DNUM_ITER=10000 -DNATIVE $< -o $@ 
+
 test-mt-hbw: test-multi-thread.c
-	$(HERMIT-CC) $(THREAD_FLAG) -DSIZE=16384 -DNUM_ITER=10000 -DNUM_THREADS=1 $< $(LIBHBWMALLOC) -o $@ 
+	$(HERMIT-CC) $(THREAD_FLAG) -DSIZE=16384 -DNUM_ITER=10000 -DNUM_THREADS=3 $< $(LIBHBWMALLOC) -o $@ 
 
 test-mt-native: test-multi-thread.c
-	$(HERMIT-CC) $(THREAD_FLAG) -DSIZE=16384 -DNUM_ITER=10000 -DNUM_THREADS=1 -DNATIVE $< -o $@ 
+	$(HERMIT-CC) $(THREAD_FLAG) -DSIZE=16384 -DNUM_ITER=10000 -DNUM_THREADS=3 -DNATIVE $< -o $@ 
 
 test-mt-linux: test-multi-thread.c
-	$(CC) $(THREAD_FLAG) -DSIZE=16384 -DNUM_ITER=10000 -DNUM_THREADS=1 -DNATIVE -DLINUX $< -o $@ 
+	$(CC) $(THREAD_FLAG) -DSIZE=16384 -DNUM_ITER=10000 -DNUM_THREADS=3 -DNATIVE -DLINUX $< -o $@ 
 
 clean:
 	rm $(TESTS)
