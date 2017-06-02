@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <malloc.h>
 
 #ifndef NATIVE 
 #include "../../hbwmalloc-hermit/hbwmalloc.h"
@@ -16,6 +17,8 @@
 
 int main()
 {
+    mallopt(M_TRIM_THRESHOLD, 1024*1024*1024);  
+    hbw_mallopt(M_TRIM_THRESHOLD, 1024*1024*1024);
     /* Test Scenario 1 */
 
     int i;

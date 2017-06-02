@@ -21,7 +21,7 @@
 #endif
 
 #define stats
-#define opt
+/*#define opt*/
 #define malloc_usable_size
 #define info
 /*#define trim*/
@@ -32,6 +32,9 @@ void* perform_work( void* argument )
 
     passed_in_value = *( ( int* )argument );
     printf( "Hello World! It's me, thread with argument %d!\n", passed_in_value );
+
+    mallopt(M_TRIM_THRESHOLD, 1024*1024*1024);  
+    hbw_mallopt(M_TRIM_THRESHOLD, 1024*1024*1024);
 
     
 

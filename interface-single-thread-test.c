@@ -8,7 +8,7 @@
 #include <malloc.h>
 
 #define stats
-#define opt
+/*#define opt*/
 #define malloc_usable_size
 #define info
 /*#define trim*/
@@ -17,6 +17,10 @@ int main()
 {
     int ele = 4000;
     char* str[10];
+
+    mallopt(M_TRIM_THRESHOLD, 1024*1024*1024);  
+    hbw_mallopt(M_TRIM_THRESHOLD, 1024*1024*1024);
+
 
 // set options of the malloc algorithm..... Ignore now for the Interface test
 #ifdef opt

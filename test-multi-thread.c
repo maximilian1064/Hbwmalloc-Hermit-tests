@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <malloc.h>
 
 #ifndef NATIVE 
 #include "../../hbwmalloc-hermit/hbwmalloc.h"
@@ -25,6 +26,10 @@ void* perform_work( void* argument )
 
     passed_in_value = *( ( int* )argument );
     printf( "Hello World! It's me, thread with argument %d!\n", passed_in_value );
+
+    mallopt(M_TRIM_THRESHOLD, 1024*1024*1024);  
+    hbw_mallopt(M_TRIM_THRESHOLD, 1024*1024*1024);
+
 
     /* Test Scenario 1 */
 
